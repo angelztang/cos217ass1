@@ -11,7 +11,7 @@ enum Statetype
     START_OF_QUOTATION,
     BACKSLASH,
     BACKSLASH_SINGLE,
-    START_OF_SINGLE_QUOTATION
+    START_OF_SINGLE_QUOTATION,
 };
 enum Statetype handleStartState(int c) {
     enum Statetype state;
@@ -156,8 +156,8 @@ int main(void)
         }
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
-         fprintf(stderr, "Unterminated comment line:");
-	 exit(EXIT_FAILURE);
+        fprintf(stderr,"");
+        exit(EXIT_FAILURE);
     }
     return 0;
 }
