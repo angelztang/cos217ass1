@@ -13,6 +13,8 @@ enum Statetype
     BACKSLASH_SINGLE,
     START_OF_SINGLE_QUOTATION
 };
+/*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
+depending on the value of the parameter int c, which is the most recently read character*/
 enum Statetype handleStartState(int c) {
     enum Statetype state;
     if (c=='/') {
