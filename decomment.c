@@ -161,7 +161,7 @@ int main(void)
             break;
         }
     }
-    if (state = MIGHT_BE_COMMENT) {
+    if (state == MIGHT_BE_COMMENT) {
         putchar('/');
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
