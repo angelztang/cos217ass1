@@ -16,7 +16,7 @@ enum Statetype
 };
 /*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
 depending on the value of the integer parameter c, which is the most recently read character*/
-enum Statetype handleStartState(int c, int *lineNumber) {
+enum Statetype handleStartState(int c) {
     enum Statetype state;
     if (c=='/') {
         state = MIGHT_BE_COMMENT;
@@ -35,7 +35,7 @@ enum Statetype handleStartState(int c, int *lineNumber) {
 }
 /*returns one of states COMMENT, MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
 depending on the value of the integer parameter c, which is the most recently read character*/
-enum Statetype handleMightBeCommentState(int c, int *lineNumber) {
+enum Statetype handleMightBeCommentState(int c) {
     enum Statetype state;
     if (c=='*') {
         putchar(' ');
@@ -61,7 +61,7 @@ enum Statetype handleMightBeCommentState(int c, int *lineNumber) {
 }
 /*returns one of states MIGHT_END_COMMENT or COMMENT
 depending on the value of the integer parameter c, which is the most recently read character*/
-enum Statetype handleCommentState(int c, int *lineNumber)
+enum Statetype handleCommentState(int c)
 {
     enum Statetype state;
     if (c=='*') {
@@ -77,7 +77,7 @@ enum Statetype handleCommentState(int c, int *lineNumber)
 }
 /*returns one of states MIGHT_BE_COMMENT, COMMENT, or START
 depending on the value of the integer parameter c, which is the most recently read character*/
-enum Statetype handleMightEndCommentState(int c, int *lineNumber)
+enum Statetype handleMightEndCommentState(int c)
 {
     enum Statetype state;
     if (c=='*') {
@@ -96,7 +96,7 @@ enum Statetype handleMightEndCommentState(int c, int *lineNumber)
 }
 /*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
 depending on the value of the parameter c, which is the most recently read character*/
-enum Statetype handleStartOfQuotationState(int c, int *lineNumber)
+enum Statetype handleStartOfQuotationState(int c)
 {
     enum Statetype state;
     if (c=='\\'){
@@ -114,7 +114,7 @@ enum Statetype handleStartOfQuotationState(int c, int *lineNumber)
 }
 /*returns one of states BACKSLASH, START_OF_SINGLE_QUOTATION, or START
 depending on the value of the integer parameter c, which is the most recently read character*/
-enum Statetype handleStartOfSingleQuotationState(int c, int *lineNumber)
+enum Statetype handleStartOfSingleQuotationState(int c)
 {
     enum Statetype state;
     if (c=='\\'){
@@ -162,28 +162,28 @@ int main(void)
         switch (state)
         {
         case START:
-            state = handleStartState(c, &lineNumber);
+            state = handleStartState(c);
             break;
         case MIGHT_BE_COMMENT:
-            state = handleMightBeCommentState(c, &lineNumber);
+            state = handleMightBeCommentState(c);
             if (state == COMMENT && commentStartLine == 0) {
                 commentStartLine = lineNumber;
             }
             break;
         case COMMENT:
-            state = handleCommentState(c, &lineNumber);
+            state = handleCommentState(c);
             break;
         case MIGHT_END_COMMENT:
-            state = handleMightEndCommentState(c, &lineNumber);
+            state = handleMightEndCommentState(c);
             if (state == START) {
                 commentStartLine = 0;
             }
             break;
         case START_OF_QUOTATION:
-            state = handleStartOfQuotationState(c, &lineNumber);
+            state = handleStartOfQuotationState(c);
             break;
         case START_OF_SINGLE_QUOTATION:
-            state = handleStartOfSingleQuotationState(c, &lineNumber);
+            state = handleStartOfSingleQuotationState(c);
             break;
         case BACKSLASH:
             state = handleBackslashState(c);
