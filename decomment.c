@@ -175,6 +175,9 @@ int main(void)
             break;
         case MIGHT_END_COMMENT:
             state = handleMightEndCommentState(c, &lineNumber);
+            if (state == START) {
+                commentStartLine = 0;
+            }
             break;
         case START_OF_QUOTATION:
             state = handleStartOfQuotationState(c, &lineNumber);
