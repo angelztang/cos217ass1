@@ -105,7 +105,7 @@ enum Statetype handleStartOfSingleQuotationState(int c)
         state = START;
     } else {
         putchar(c);
-        state = START_OF_QUOTATION;
+        state = START_OF_SINGLE_QUOTATION;
     }
     return state;
 }
