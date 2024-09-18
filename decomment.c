@@ -72,7 +72,11 @@ enum Statetype handleMightEndCommentState(int c)
     enum Statetype state;
     if (c=='*') {
         state = MIGHT_END_COMMENT;
-    } else if (c=='/'){
+    } else if (c=='\n') {
+        putchar('\n');
+        state = COMMENT;
+    }
+    else if (c=='/'){
         state = START;
     } else {
         state = COMMENT;
@@ -156,6 +160,9 @@ int main(void)
             state = handleBackslashSingleState(c);
             break;
         }
+    }
+    if (state = MIGHT_BE_COMMENT) {
+        putchar('/');
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
          fprintf(stderr, "Unterminated comment line:");
