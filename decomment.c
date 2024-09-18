@@ -30,7 +30,7 @@ enum Statetype handleStartState(int c, int *lineNumber) {
         putchar(c);
         state = START;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns one of states COMMENT, MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
@@ -56,7 +56,7 @@ enum Statetype handleMightBeCommentState(int c, int *lineNumber) {
         putchar(c);
         state = START;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns one of states MIGHT_END_COMMENT or COMMENT
@@ -72,7 +72,7 @@ enum Statetype handleCommentState(int c, int *lineNumber)
     } else {
         state = COMMENT;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns one of states MIGHT_BE_COMMENT, COMMENT, or START
@@ -91,7 +91,7 @@ enum Statetype handleMightEndCommentState(int c, int *lineNumber)
     } else {
         state = COMMENT;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
@@ -109,7 +109,7 @@ enum Statetype handleStartOfQuotationState(int c, int *lineNumber)
         putchar(c);
         state = START_OF_QUOTATION;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns one of states BACKSLASH, START_OF_SINGLE_QUOTATION, or START
@@ -127,7 +127,7 @@ enum Statetype handleStartOfSingleQuotationState(int c, int *lineNumber)
         putchar(c);
         state = START_OF_SINGLE_QUOTATION;
     }
-    if (c == '\n') (*lineNumber)++;
+//if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns state START_OF_QUOTATION and prints integer parameter c, which is the most recently read character*/
@@ -154,9 +154,11 @@ int main(void)
 {
     int c;
     int lineNumber = 1;
+    int commentStartLine=0;
     enum Statetype state = START;
     while ((c = getchar()) != EOF)
     {
+        if (c == '\n') (lineNumber)++;
         switch (state)
         {
         case START:
@@ -167,9 +169,11 @@ int main(void)
             break;
         case COMMENT:
             state = handleCommentState(c, &lineNumber);
+            commentStartLine=lineNumber;
             break;
         case MIGHT_END_COMMENT:
             state = handleMightEndCommentState(c, &lineNumber);
+            commentStartLine=lineNumber;
             break;
         case START_OF_QUOTATION:
             state = handleStartOfQuotationState(c, &lineNumber);
@@ -189,7 +193,7 @@ int main(void)
         putchar('/');
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
-         fprintf(stderr, "Error: line %d: unterminated comment\n", lineNumber);
+         fprintf(stderr, "Error: line %d: unterminated comment\n", commentStartLine);
 	 exit(EXIT_FAILURE);
     }
     return 0;
