@@ -131,21 +131,19 @@ enum Statetype handleStartOfSingleQuotationState(int c, int *lineNumber)
     return state;
 }
 /*returns state START_OF_QUOTATION and prints integer parameter c, which is the most recently read character*/
-enum Statetype handleBackslashState(int c, int *lineNumber)
+enum Statetype handleBackslashState(int c)
 {
     enum Statetype state;
     state = START_OF_QUOTATION;
     putchar(c);
-    if (c == '\n') (*lineNumber)++;
     return state;
 }
 /*returns state START_OF_SINGLE_QUOTATION and prints integer parameter c, which is the most recently read character*/
-enum Statetype handleBackslashSingleState(int c, int *lineNumber)
+enum Statetype handleBackslashSingleState(int c)
 {
     enum Statetype state;
     state = START_OF_SINGLE_QUOTATION;
     putchar(c);
-    if (c == '\n') (*lineNumber)++;
     return state;
 }
 /* 
@@ -180,10 +178,10 @@ int main(void)
             state = handleStartOfSingleQuotationState(c, &lineNumber);
             break;
         case BACKSLASH:
-            state = handleBackslashState(c, &lineNumber);
+            state = handleBackslashState(c);
             break;
         case BACKSLASH_SINGLE:
-            state = handleBackslashSingleState(c, &lineNumber);
+            state = handleBackslashSingleState(c);
             break;
         }
     }
@@ -191,7 +189,7 @@ int main(void)
         putchar('/');
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
-         fprintf(stderr, "Error: line %d: unterminated comment", lineNumber);
+         fprintf(stderr, "Error: line %d: unterminated comment\n", lineNumber);
 	 exit(EXIT_FAILURE);
     }
     return 0;
