@@ -166,14 +166,15 @@ int main(void)
             break;
         case MIGHT_BE_COMMENT:
             state = handleMightBeCommentState(c, &lineNumber);
+            if (state == COMMENT && commentStartLine == 0) {
+                commentStartLine = lineNumber;
+            }
             break;
         case COMMENT:
             state = handleCommentState(c, &lineNumber);
-            commentStartLine=lineNumber;
             break;
         case MIGHT_END_COMMENT:
             state = handleMightEndCommentState(c, &lineNumber);
-            commentStartLine=lineNumber;
             break;
         case START_OF_QUOTATION:
             state = handleStartOfQuotationState(c, &lineNumber);
