@@ -14,8 +14,9 @@ enum Statetype
     BACKSLASH_SINGLE,
     START_OF_SINGLE_QUOTATION
 };
-/*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
-depending on the value of the integer parameter c, which is the most recently read character*/
+/*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, 
+START_OF_SINGLE_QUOTATION, or START depending on the value of the 
+integer parameter c, which is the most recently read character*/
 enum Statetype handleStartState(int c) {
     enum Statetype state;
     if (c=='/') {
@@ -33,8 +34,9 @@ enum Statetype handleStartState(int c) {
 
     return state;
 }
-/*returns one of states COMMENT, MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
-depending on the value of the integer parameter c, which is the most recently read character*/
+/*returns one of states COMMENT, MIGHT_BE_COMMENT, START_OF_QUOTATION, 
+START_OF_SINGLE_QUOTATION, or START depending on the value of the 
+integer parameter c, which is the most recently read character*/
 enum Statetype handleMightBeCommentState(int c) {
     enum Statetype state;
     if (c=='*') {
@@ -58,8 +60,9 @@ enum Statetype handleMightBeCommentState(int c) {
     }
     return state;
 }
-/*returns one of states MIGHT_END_COMMENT or COMMENT
-depending on the value of the integer parameter c, which is the most recently read character*/
+/*returns one of states MIGHT_END_COMMENT or COMMENT depending on the 
+value of the integer parameter c, which is the most recently read 
+character*/
 enum Statetype handleCommentState(int c)
 {
     enum Statetype state;
@@ -74,8 +77,9 @@ enum Statetype handleCommentState(int c)
 
     return state;
 }
-/*returns one of states MIGHT_BE_COMMENT, COMMENT, or START
-depending on the value of the integer parameter c, which is the most recently read character*/
+/*returns one of states MIGHT_BE_COMMENT, COMMENT, or START depending 
+on the value of the integer parameter c, which is the most recently 
+read character*/
 enum Statetype handleMightEndCommentState(int c)
 {
     enum Statetype state;
@@ -93,8 +97,9 @@ enum Statetype handleMightEndCommentState(int c)
 
     return state;
 }
-/*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION, START_OF_SINGLE_QUOTATION, or START
-depending on the value of the parameter c, which is the most recently read character*/
+/*returns one of states MIGHT_BE_COMMENT, START_OF_QUOTATION,
+START_OF_SINGLE_QUOTATION, or START depending on the value of the 
+parameter c, which is the most recently read character*/
 enum Statetype handleStartOfQuotationState(int c)
 {
     enum Statetype state;
@@ -112,7 +117,8 @@ enum Statetype handleStartOfQuotationState(int c)
     return state;
 }
 /*returns one of states BACKSLASH, START_OF_SINGLE_QUOTATION, or START
-depending on the value of the integer parameter c, which is the most recently read character*/
+depending on the value of the integer parameter c, which is the most 
+recently read character*/
 enum Statetype handleStartOfSingleQuotationState(int c)
 {
     enum Statetype state;
@@ -129,7 +135,8 @@ enum Statetype handleStartOfSingleQuotationState(int c)
 
     return state;
 }
-/*returns state START_OF_QUOTATION and prints integer parameter c, which is the most recently read character*/
+/*returns state START_OF_QUOTATION and prints integer parameter c, 
+which is the most recently read character*/
 enum Statetype handleBackslashState(int c)
 {
     enum Statetype state;
@@ -137,7 +144,8 @@ enum Statetype handleBackslashState(int c)
     putchar(c);
     return state;
 }
-/*returns state START_OF_SINGLE_QUOTATION and prints integer parameter c, which is the most recently read character*/
+/*returns state START_OF_SINGLE_QUOTATION and prints integer parameter 
+c, which is the most recently read character*/
 enum Statetype handleBackslashSingleState(int c)
 {
     enum Statetype state;
@@ -145,10 +153,10 @@ enum Statetype handleBackslashSingleState(int c)
     putchar(c);
     return state;
 }
-/* 
-Reads characters from stdin, processes them based on a state machine handling text, comments, and literals, and prints to stdout. 
-Returns 0 on success or exits with failure (prints error to stderr) if an unterminated comment is found.
- */
+/*Reads characters from stdin, processes them based on a state machine 
+handling text, comments, and literals, and prints to stdout. Returns 0 
+on success or exits with failure (prints error to stderr) if an 
+unterminated comment is found.*/
 int main(void)
 {
     int c;
@@ -174,9 +182,6 @@ int main(void)
             break;
         case MIGHT_END_COMMENT:
             state = handleMightEndCommentState(c);
-            /* if (state == START) {
-            //     commentStartLine = 0;
-            // } */
             break;
         case START_OF_QUOTATION:
             state = handleStartOfQuotationState(c);
@@ -196,7 +201,8 @@ int main(void)
         putchar('/');
     }
     if (state == COMMENT || state == MIGHT_END_COMMENT){
-         fprintf(stderr, "Error: line %d: unterminated comment\n", commentStartLine);
+         fprintf(stderr, "Error: line %d: unterminated comment\n", 
+         commentStartLine);
 	 exit(EXIT_FAILURE);
     }
     return 0;
