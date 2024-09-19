@@ -47,7 +47,7 @@ enum Statetype handleMightBeCommentState(int c) {
         putchar('/');
         putchar(c);
         state = START_OF_QUOTATION;
-    } else if ('\'') {
+    } else if (c=='\'') {
         putchar('/');
         putchar(c);
         state = START_OF_SINGLE_QUOTATION;
