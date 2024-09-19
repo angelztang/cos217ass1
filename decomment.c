@@ -165,7 +165,7 @@ int main(void)
             break;
         case MIGHT_BE_COMMENT:
             state = handleMightBeCommentState(c);
-            if (state == COMMENT && commentStartLine == 0) {
+            if (state == COMMENT) {
                 commentStartLine = lineNumber;
             }
             break;
@@ -174,9 +174,9 @@ int main(void)
             break;
         case MIGHT_END_COMMENT:
             state = handleMightEndCommentState(c);
-            if (state == START) {
-                commentStartLine = 0;
-            }
+            /* if (state == START) {
+            //     commentStartLine = 0;
+            // } */
             break;
         case START_OF_QUOTATION:
             state = handleStartOfQuotationState(c);
